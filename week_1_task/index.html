@@ -17,128 +17,43 @@
   </style>
 </head>
 <body>
-  <div class="card">
-  <h1>Learning Outcome Demonstration: Arrays in JavaScript</h1>
-  <p>This page demonstrates the study and practice of array operations in JavaScript.<br>
-  Results are shown both in the browser console and in the output area below.<br>
-  Interact with the controls to explore how arrays work!</p>
-  </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Array Implementation</title>
+</head>
+<body>
 
-  <div class="controls">
-    <label>Push value: <input id="pushValue" type="text" placeholder="e.g. kiwi"></label>
-    <button id="runDemo">Run full demo (console + page)</button>
-    <button id="clearOut">Clear output</button>
-  </div>
+  <h1>Array Example</h1>
 
-  <pre id="output">Console output will appear here (and also in the browser console).</pre>
+  <div id="output"></div>
 
   <script>
-    // Small helper to print to both page and console
-    function log(...args){
-      console.log(...args);
-      const out = document.getElementById('output');
-      out.textContent += args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' ') + '\n';
-      out.scrollTop = out.scrollHeight;
-    }
+    // 1. Define an array
+    const fruits = ["Apple", "Banana", "Cherry", "Date"];
 
-    // A tiny "array implementation" demonstration using JS's built-in arrays
-    function demoArrayOperations() {
-      // 1) creation
-      const fruits = ['apple', 'banana', 'mango'];
-      log('Initial array:', fruits);
+    // 2. Display the array in the console
+    console.log("Here is the full array:", fruits);
+    console.log("The first item is:", fruits[0]);
+    console.log("The number of items in the array is:", fruits.length);
 
-      // 2) push -> add to end
-      fruits.push('orange');
-      log('After push("orange"):', fruits);
+    // 3. Display the array on the webpage
+    const outputDiv = document.getElementById("output");
+    outputDiv.innerHTML = "<h2>List of Fruits</h2>";
 
-      // 3) pop -> remove from end
-      const popped = fruits.pop();
-      log('pop() returned:', popped, 'array now:', fruits);
-
-      // 4) unshift -> add to front
-      fruits.unshift('strawberry');
-      log('After unshift("strawberry"):', fruits);
-
-      // 5) shift -> remove from front
-      const shifted = fruits.shift();
-      log('shift() returned:', shifted, 'array now:', fruits);
-
-      // 6) splice -> remove/insert at index
-      // remove 1 item at index 1 and insert 'kiwi', 'grape'
-      const spliced = fruits.splice(1, 1, 'kiwi', 'grape');
-      log('splice(1,1,"kiwi","grape") removed:', spliced, 'array now:', fruits);
-
-      // 7) slice -> shallow copy
-      const part = fruits.slice(0,2);
-      log('slice(0,2):', part, 'original unchanged:', fruits);
-
-      // 8) iteration: forEach
-      log('forEach -> items:');
-      fruits.forEach((f, i) => log(i + ':', f));
-
-      // 9) map -> produce new array
-      const upper = fruits.map(s => s.toUpperCase());
-      log('map to uppercase:', upper);
-
-      // 10) filter -> select items that contain 'i'
-      const withI = fruits.filter(s => s.includes('i'));
-      log('filter contains "i":', withI);
-
-      // 11) reduce -> join into a sentence
-      const sentence = fruits.reduce((acc, cur, i) => acc + (i? ', ' : '') + cur , 'Fruits: ');
-      log('reduce ->', sentence);
-
-      // 12) find index
-      const idx = fruits.indexOf('kiwi');
-      log('indexOf("kiwi") ->', idx);
-
-      // 13) demonstrates manual array-like object (toy implementation)
-      const MyArray = function(){
-        this.length = 0;
-      };
-      MyArray.prototype.push = function(val){
-        this[this.length] = val;
-        this.length++;
-        return this.length;
-      };
-      MyArray.prototype.get = function(i){ return this[i]; };
-
-      const bag = new MyArray();
-      bag.push('alpha'); bag.push('beta');
-      log('Toy MyArray contents via get(0), get(1):', bag.get(0), bag.get(1), 'length:', bag.length);
-
-      log('Demo finished. Inspect the browser console for the same logs.');
-    }
-
-    // Wire up buttons
-    document.getElementById('runDemo').addEventListener('click', () => {
-      document.getElementById('output').textContent = '';
-      demoArrayOperations();
+    // Create a list from the array
+    const ul = document.createElement('ul');
+    fruits.forEach(fruit => {
+      const li = document.createElement('li');
+      li.textContent = fruit;
+      ul.appendChild(li);
     });
-
-    document.getElementById('clearOut').addEventListener('click', () => {
-      document.getElementById('output').textContent = '';
-    });
-
-    // Also allow pushing a user-provided value quickly
-    document.getElementById('pushValue').addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        const val = e.target.value.trim();
-        if (!val) return;
-        // simple demo: show push/pop with a small array
-        const arr = ['a','b'];
-        log('Start small array:', arr);
-        arr.push(val);
-        log('After pushing user value:', arr);
-      }
-    });
-
-    // Auto-run once so the page shows something on load
-    window.addEventListener('DOMContentLoaded', () => {
-      // leave the output area with an instruction line
-      document.getElementById('output').textContent = 'Click "Run full demo" to see array operations. Logs also go to browser console.\n';
-    });
+    outputDiv.appendChild(ul);
   </script>
+
+</body>
+</html>
 </body>
     <h2>Array Study/Practice Demo</h2>
     <p>Open the browser console to see array operations in action.</p>
