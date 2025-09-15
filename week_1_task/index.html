@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Array Implementation Demo — Console + Web</title>
+  <style>
+    body{font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:#f4f7f9; padding:24px}
+    .card{width:360px; min-height:100px; background:#3fb0b6; color:#fff; border-radius:6px; padding:12px; box-shadow:0 6px 18px rgba(0,0,0,.08)}
+    h1{font-size:16px;margin:0 0 8px}
+    p{margin:0;font-size:14px;line-height:1.25}
+    .controls{margin-top:16px}
+    button{margin-right:8px;margin-bottom:8px;padding:8px 10px;border-radius:6px;border:1px solid rgba(0,0,0,.08);background:#fff;cursor:pointer}
+    pre#output{background:#0f1720;color:#e6f1f2;padding:12px;border-radius:6px;height:180px;overflow:auto;margin-top:12px}
+    label{display:block;margin-top:10px;font-size:13px}
+    input[type=text]{padding:6px;border-radius:6px;border:1px solid #cbd5e1}
+  </style>
+</head>
+<body>
+  <div class="card">
+  <h1>Learning Outcome Demonstration: Arrays in JavaScript</h1>
+  <p>This page demonstrates the study and practice of array operations in JavaScript.<br>
+  Results are shown both in the browser console and in the output area below.<br>
+  Interact with the controls to explore how arrays work!</p>
+  </div>
+
+  <div class="controls">
+    <label>Push value: <input id="pushValue" type="text" placeholder="e.g. kiwi"></label>
+    <button id="runDemo">Run full demo (console + page)</button>
+    <button id="clearOut">Clear output</button>
+  </div>
+
+  <pre id="output">Console output will appear here (and also in the browser console).</pre>
+
+  <script>
+    // Small helper to print to both page and console
+    function log(...args){
+      console.log(...args);
+      const out = document.getElementById('output');
+      out.textContent += args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' ') + '\n';
+      out.scrollTop = out.scrollHeight;
+    }
+
+    // A tiny "array implementation" demonstration using JS's built-in arrays
+    function demoArrayOperations() {
+      // 1) creation
+      const fruits = ['apple', 'banana', 'mango'];
+      log('Initial array:', fruits);
+
+      // 2) push -> add to end
+      fruits.push('orange');
+      log('After push("orange"):', fruits);
+
+      // 3) pop -> remove from end
+      const popped = fruits.pop();
+      log('pop() returned:', popped, 'array now:', fruits);
+
+      // 4) unshift -> add to front
+      fruits.unshift('strawberry');
+      log('After unshift("strawberry"):', fruits);
+
+      // 5) shift -> remove from front
+      const shifted = fruits.shift();
+      log('shift() returned:', shifted, 'array now:', fruits);
+
+      // 6) splice -> remove/insert at index
+      // remove 1 item at index 1 and insert 'kiwi', 'grape'
+      const spliced = fruits.splice(1, 1, 'kiwi', 'grape');
+      log('splice(1,1,"kiwi","grape") removed:', spliced, 'array now:', fruits);
+
+      // 7) slice -> shallow copy
+      const part = fruits.slice(0,2);
+      log('slice(0,2):', part, 'original unchanged:', fruits);
+
+      // 8) iteration: forEach
+      log('forEach -> items:');
+      fruits.forEach((f, i) => log(i + ':', f));
+
+      // 9) map -> produce new array
+      const upper = fruits.map(s => s.toUpperCase());
+      log('map to uppercase:', upper);
+
+      // 10) filter -> select items that contain 'i'
+      const withI = fruits.filter(s => s.includes('i'));
+      log('filter contains "i":', withI);
+
+      // 11) reduce -> join into a sentence
+      const sentence = fruits.reduce((acc, cur, i) => acc + (i? ', ' : '') + cur , 'Fruits: ');
+      log('reduce ->', sentence);
+
+      // 12) find index
+      const idx = fruits.indexOf('kiwi');
+      log('indexOf("kiwi") ->', idx);
+
+      // 13) demonstrates manual array-like object (toy implementation)
+      const MyArray = function(){
+        this.length = 0;
+      };
+      MyArray.prototype.push = function(val){
+        this[this.length] = val;
+        this.length++;
+        return this.length;
+      };
+      MyArray.prototype.get = function(i){ return this[i]; };
+
+      const bag = new MyArray();
+      bag.push('alpha'); bag.push('beta');
+      log('Toy MyArray contents via get(0), get(1):', bag.get(0), bag.get(1), 'length:', bag.length);
+
+      log('Demo finished. Inspect the browser console for the same logs.');
+    }
+
+    // Wire up buttons
+    document.getElementById('runDemo').addEventListener('click', () => {
+      document.getElementById('output').textContent = '';
+      demoArrayOperations();
+    });
+
+    document.getElementById('clearOut').addEventListener('click', () => {
+      document.getElementById('output').textContent = '';
+    });
+
+    // Also allow pushing a user-provided value quickly
+    document.getElementById('pushValue').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const val = e.target.value.trim();
+        if (!val) return;
+        // simple demo: show push/pop with a small array
+        const arr = ['a','b'];
+        log('Start small array:', arr);
+        arr.push(val);
+        log('After pushing user value:', arr);
+      }
+    });
+
+    // Auto-run once so the page shows something on load
+    window.addEventListener('DOMContentLoaded', () => {
+      // leave the output area with an instruction line
+      document.getElementById('output').textContent = 'Click "Run full demo" to see array operations. Logs also go to browser console.\n';
+    });
+  </script>
+</body>
+    <h2>Array Study/Practice Demo</h2>
+    <p>Open the browser console to see array operations in action.</p>
+    <script>
+      // Create an array of numbers
+      const numbers = [10, 20, 30, 40, 50];
+      console.log('Initial array:', numbers);
+
+      // Add an element
+      numbers.push(60);
+      console.log('After push(60):', numbers);
+
+      // Remove the last element
+      const removed = numbers.pop();
+      console.log('After pop():', numbers, '| Removed:', removed);
+
+      // Iterate and print each element
+      console.log('Iterating through array:');
+      numbers.forEach((num, idx) => {
+        console.log(`Index ${idx}: Value ${num}`);
+      });
+
+      // Find an element
+      const found = numbers.find(num => num === 30);
+      console.log('Find 30 in array:', found);
+    </script>
