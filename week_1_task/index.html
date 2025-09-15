@@ -1,82 +1,37 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Array Implementation Demo — Console + Web</title>
-  <style>
-    body{font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:#f4f7f9; padding:24px}
-    .card{width:360px; min-height:100px; background:#3fb0b6; color:#fff; border-radius:6px; padding:12px; box-shadow:0 6px 18px rgba(0,0,0,.08)}
-    h1{font-size:16px;margin:0 0 8px}
-    p{margin:0;font-size:14px;line-height:1.25}
-    .controls{margin-top:16px}
-    button{margin-right:8px;margin-bottom:8px;padding:8px 10px;border-radius:6px;border:1px solid rgba(0,0,0,.08);background:#fff;cursor:pointer}
-    pre#output{background:#0f1720;color:#e6f1f2;padding:12px;border-radius:6px;height:180px;overflow:auto;margin-top:12px}
-    label{display:block;margin-top:10px;font-size:13px}
-    input[type=text]{padding:6px;border-radius:6px;border:1px solid #cbd5e1}
-  </style>
-</head>
-<body>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Array Implementation</title>
+    <meta charset="UTF-8">
+    <title>Array Implementation</title>
 </head>
 <body>
 
-  <h1>Array Example</h1>
+    <h1>Array Example</h1>
 
-  <div id="output"></div>
+    <div id="output"></div>
 
-  <script>
-    // 1. Define an array
-    const fruits = ["Apple", "Banana", "Cherry", "Date"];
+    <script>
+        // 1. Define an array
+        const fruits = ["Apple", "Banana", "Cherry", "Date"];
 
-    // 2. Display the array in the console
-    console.log("Here is the full array:", fruits);
-    console.log("The first item is:", fruits[0]);
-    console.log("The number of items in the array is:", fruits.length);
+        // 2. Display the array in the console
+        console.log("Here is the full array:", fruits);
+        console.log("The first item is:", fruits[0]);
+        console.log("The number of items in the array is:", fruits.length);
 
-    // 3. Display the array on the webpage
-    const outputDiv = document.getElementById("output");
-    outputDiv.innerHTML = "<h2>List of Fruits</h2>";
+        // 3. Display the array on the webpage
+        const outputDiv = document.getElementById("output");
+        outputDiv.innerHTML = "<h2>List of Fruits</h2>";
 
-    // Create a list from the array
-    const ul = document.createElement('ul');
-    fruits.forEach(fruit => {
-      const li = document.createElement('li');
-      li.textContent = fruit;
-      ul.appendChild(li);
-    });
-    outputDiv.appendChild(ul);
-  </script>
+        // Create a list from the array
+        const ul = document.createElement('ul');
+        fruits.forEach(fruit => {
+            const li = document.createElement('li');
+            li.textContent = fruit;
+            ul.appendChild(li);
+        });
+        outputDiv.appendChild(ul);
+    </script>
 
 </body>
 </html>
-</body>
-    <h2>Array Study/Practice Demo</h2>
-    <p>Open the browser console to see array operations in action.</p>
-    <script>
-      // Create an array of numbers
-      const numbers = [10, 20, 30, 40, 50];
-      console.log('Initial array:', numbers);
-
-      // Add an element
-      numbers.push(60);
-      console.log('After push(60):', numbers);
-
-      // Remove the last element
-      const removed = numbers.pop();
-      console.log('After pop():', numbers, '| Removed:', removed);
-
-      // Iterate and print each element
-      console.log('Iterating through array:');
-      numbers.forEach((num, idx) => {
-        console.log(`Index ${idx}: Value ${num}`);
-      });
-
-      // Find an element
-      const found = numbers.find(num => num === 30);
-      console.log('Find 30 in array:', found);
-    </script>
