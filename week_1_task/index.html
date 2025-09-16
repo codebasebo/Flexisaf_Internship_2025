@@ -12,28 +12,73 @@
   <script>
     // Creating an array
     let fruits = ["Apple", "Banana", "Mango", "Orange"];
+    let outputDiv = document.getElementById("output");
+    function printToPage(title, value) {
+      outputDiv.innerHTML += `<strong>${title}</strong>: ${Array.isArray(value) ? value.join(', ') : value}<br>`;
+    }
 
+    // 1. Original Array
     console.log("Original Array:", fruits);
+    printToPage("Original Array", fruits);
 
-    // Add an element
+    // 2. Add an element (push)
     fruits.push("Pineapple");
     console.log("After push:", fruits);
+    printToPage("After push (add Pineapple)", fruits);
 
-    // Remove last element
-    fruits.pop();
-    console.log("After pop:", fruits);
+    // 3. Remove last element (pop)
+    let popped = fruits.pop();
+    console.log("After pop:", fruits, "Popped:", popped);
+    printToPage("After pop (remove last)", fruits);
+    printToPage("Popped element", popped);
 
-    // Accessing elements
-    console.log("First fruit:", fruits[0]);
-    console.log("Last fruit:", fruits[fruits.length - 1]);
+    // 4. Add to front (unshift)
+    fruits.unshift("Strawberry");
+    console.log("After unshift:", fruits);
+    printToPage("After unshift (add Strawberry to front)", fruits);
 
-    // Looping through array and printing to page
-    let outputDiv = document.getElementById("output");
-    outputDiv.innerHTML = "<h3>Fruits in the Array:</h3>";
+    // 5. Remove from front (shift)
+    let shifted = fruits.shift();
+    console.log("After shift:", fruits, "Shifted:", shifted);
+    printToPage("After shift (remove front)", fruits);
+    printToPage("Shifted element", shifted);
 
+    // 6. Splice (remove/insert at index)
+    let spliced = fruits.splice(1, 1, "Kiwi", "Grape");
+    console.log("After splice:", fruits, "Spliced:", spliced);
+    printToPage("After splice (replace index 1)", fruits);
+    printToPage("Spliced element(s)", spliced);
+
+    // 7. Slice (copy part)
+    let sliced = fruits.slice(0, 2);
+    console.log("Slice (0,2):", sliced);
+    printToPage("Slice (first 2 elements)", sliced);
+
+    // 8. Map (transform)
+    let upper = fruits.map(f => f.toUpperCase());
+    console.log("Map to uppercase:", upper);
+    printToPage("Map to uppercase", upper);
+
+    // 9. Filter (select)
+    let withA = fruits.filter(f => f.includes('a'));
+    console.log("Filter contains 'a':", withA);
+    printToPage("Filter: contains 'a'", withA);
+
+    // 10. Reduce (combine)
+    let sentence = fruits.reduce((acc, cur, i) => acc + (i ? ', ' : '') + cur, 'Fruits: ');
+    console.log("Reduce to sentence:", sentence);
+    printToPage("Reduce to sentence", sentence);
+
+    // 11. Find index
+    let idx = fruits.indexOf("Kiwi");
+    console.log("Index of 'Kiwi':", idx);
+    printToPage("Index of 'Kiwi'", idx);
+
+    // 12. Looping through array
+    printToPage("Loop through array", "");
     fruits.forEach((fruit, index) => {
       console.log(`Fruit ${index + 1}: ${fruit}`);
-      outputDiv.innerHTML += `Fruit ${index + 1}: ${fruit} <br>`;
+      printToPage(`Fruit ${index + 1}`, fruit);
     });
   </script>
 </body>
