@@ -1,37 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Array Implementation</title>
+  <title>Array Demo</title>
 </head>
 <body>
+  <h2>JavaScript Array Example</h2>
+  <p>Check the console and the section below for array output:</p>
 
-    <h1>Array Example</h1>
+  <div id="output"></div>
 
-    <div id="output"></div>
+  <script>
+    // Creating an array
+    let fruits = ["Apple", "Banana", "Mango", "Orange"];
 
-    <script>
-        // 1. Define an array
-        const fruits = ["Apple", "Banana", "Cherry", "Date"];
+    console.log("Original Array:", fruits);
 
-        // 2. Display the array in the console
-        console.log("Here is the full array:", fruits);
-        console.log("The first item is:", fruits[0]);
-        console.log("The number of items in the array is:", fruits.length);
+    // Add an element
+    fruits.push("Pineapple");
+    console.log("After push:", fruits);
 
-        // 3. Display the array on the webpage
-        const outputDiv = document.getElementById("output");
-        outputDiv.innerHTML = "<h2>List of Fruits</h2>";
+    // Remove last element
+    fruits.pop();
+    console.log("After pop:", fruits);
 
-        // Create a list from the array
-        const ul = document.createElement('ul');
-        fruits.forEach(fruit => {
-            const li = document.createElement('li');
-            li.textContent = fruit;
-            ul.appendChild(li);
-        });
-        outputDiv.appendChild(ul);
-    </script>
+    // Accessing elements
+    console.log("First fruit:", fruits[0]);
+    console.log("Last fruit:", fruits[fruits.length - 1]);
 
+    // Looping through array and printing to page
+    let outputDiv = document.getElementById("output");
+    outputDiv.innerHTML = "<h3>Fruits in the Array:</h3>";
+
+    fruits.forEach((fruit, index) => {
+      console.log(`Fruit ${index + 1}: ${fruit}`);
+      outputDiv.innerHTML += `Fruit ${index + 1}: ${fruit} <br>`;
+    });
+  </script>
 </body>
 </html>
