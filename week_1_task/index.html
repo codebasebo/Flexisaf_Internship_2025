@@ -1,85 +1,75 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Array Demo</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Array Implementation Example</title>
 </head>
 <body>
-  <h2>JavaScript Array Example</h2>
-  <p>Check the console and the section below for array output:</p>
-
-  <div id="output"></div>
+  <h1>Array Manipulation Example</h1>
+  <p id="output">Array operations will be displayed here.</p>
+  <button id="btn1">Add Fruit</button>
+  <button id="btn2">Remove Last Fruit</button>
+  <button id="btn3">Display All Fruits</button>
 
   <script>
-    // Creating an array
-    let fruits = ["Apple", "Banana", "Mango", "Orange"];
-    let outputDiv = document.getElementById("output");
-    function printToPage(title, value) {
-      outputDiv.innerHTML += `<strong>${title}</strong>: ${Array.isArray(value) ? value.join(', ') : value}<br>`;
-    }
+    // Initialize an array of fruits
+    let fruits = ["Apple", "Banana"];
 
-    // 1. Original Array
-    console.log("Original Array:", fruits);
-    printToPage("Original Array", fruits);
+    // Display initial array length and content
+    console.log("Initial fruits array:", fruits);
+    console.log("Initial length:", fruits.length);
 
-    // 2. Add an element (push)
-    fruits.push("Pineapple");
-    console.log("After push:", fruits);
-    printToPage("After push (add Pineapple)", fruits);
+    // Add a new fruit to the end using push()
+    const newLength = fruits.push("Orange");
+    console.log("After adding 'Orange':", fruits);
+    console.log("New length:", newLength);
 
-    // 3. Remove last element (pop)
-    let popped = fruits.pop();
-    console.log("After pop:", fruits, "Popped:", popped);
-    printToPage("After pop (remove last)", fruits);
-    printToPage("Popped element", popped);
+    // Remove the last fruit using pop()
+    const removedItem = fruits.pop();
+    console.log("After removing last item:", fruits);
+    console.log("Removed item:", removedItem);
 
-    // 4. Add to front (unshift)
-    fruits.unshift("Strawberry");
-    console.log("After unshift:", fruits);
-    printToPage("After unshift (add Strawberry to front)", fruits);
+    // Add multiple fruits using push() with multiple arguments
+    fruits.push("Grape", "Mango");
+    console.log("After adding 'Grape' and 'Mango':", fruits);
 
-    // 5. Remove from front (shift)
-    let shifted = fruits.shift();
-    console.log("After shift:", fruits, "Shifted:", shifted);
-    printToPage("After shift (remove front)", fruits);
-    printToPage("Shifted element", shifted);
-
-    // 6. Splice (remove/insert at index)
-    let spliced = fruits.splice(1, 1, "Kiwi", "Grape");
-    console.log("After splice:", fruits, "Spliced:", spliced);
-    printToPage("After splice (replace index 1)", fruits);
-    printToPage("Spliced element(s)", spliced);
-
-    // 7. Slice (copy part)
-    let sliced = fruits.slice(0, 2);
-    console.log("Slice (0,2):", sliced);
-    printToPage("Slice (first 2 elements)", sliced);
-
-    // 8. Map (transform)
-    let upper = fruits.map(f => f.toUpperCase());
-    console.log("Map to uppercase:", upper);
-    printToPage("Map to uppercase", upper);
-
-    // 9. Filter (select)
-    let withA = fruits.filter(f => f.includes('a'));
-    console.log("Filter contains 'a':", withA);
-    printToPage("Filter: contains 'a'", withA);
-
-    // 10. Reduce (combine)
-    let sentence = fruits.reduce((acc, cur, i) => acc + (i ? ', ' : '') + cur, 'Fruits: ');
-    console.log("Reduce to sentence:", sentence);
-    printToPage("Reduce to sentence", sentence);
-
-    // 11. Find index
-    let idx = fruits.indexOf("Kiwi");
-    console.log("Index of 'Kiwi':", idx);
-    printToPage("Index of 'Kiwi'", idx);
-
-    // 12. Looping through array
-    printToPage("Loop through array", "");
+    // Use forEach to iterate and log each fruit with its index
     fruits.forEach((fruit, index) => {
-      console.log(`Fruit ${index + 1}: ${fruit}`);
-      printToPage(`Fruit ${index + 1}`, fruit);
+      console.log(`Fruit at index ${index}: ${fruit}`);
     });
+
+    // Use join() to create a comma-separated string
+    const fruitsString = fruits.join(", ");
+    console.log("Fruits as a string:", fruitsString);
+
+    // Update the HTML page dynamically
+    document.getElementById("btn1").onclick = function () {
+      const newFruit = prompt("Enter a new fruit:");
+      if (newFruit) {
+        fruits.push(newFruit);
+        console.log("Added:", newFruit);
+        document.getElementById("output").textContent = `Current fruits: ${fruits.join(", ")}`;
+      }
+    };
+
+    document.getElementById("btn2").onclick = function () {
+      if (fruits.length > 0) {
+        const removed = fruits.pop();
+        console.log("Removed:", removed);
+        document.getElementById("output").textContent = `Current fruits: ${fruits.join(", ")}`;
+      } else {
+        document.getElementById("output").textContent = "No fruits to remove.";
+      }
+    };
+
+    document.getElementById("btn3").onclick = function () {
+      if (fruits.length > 0) {
+        document.getElementById("output").textContent = `Current fruits: ${fruits.join(", ")}`;
+      } else {
+        document.getElementById("output").textContent = "No fruits in the list.";
+      }
+    };
   </script>
 </body>
-</html>
+</html>   
