@@ -1,75 +1,243 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Array Implementation Example</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>My JavaScript Array Playground</title>
+  <style>
+    :root{font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial;margin:0;padding:0}
+    body{background:#f6f8fa;color:#0b1220;padding:24px}
+    .container{max-width:980px;margin:0 auto;background:#fff;border-radius:12px;box-shadow:0 6px 24px rgba(15,23,42,0.08);padding:20px}
+    header{display:flex;align-items:center;gap:12px}
+    h1{font-size:20px;margin:0}
+    p.lead{color:#4b5563;margin:6px 0 18px}
+    .grid{display:grid;grid-template-columns:1fr 360px;gap:18px}
+    .card{background:#fbfdff;border-radius:10px;padding:12px;border:1px solid #e6eef6}
+    .controls{display:flex;flex-wrap:wrap;gap:8px}
+    button{padding:8px 10px;border-radius:8px;border:0;background:#0ea5a2;color:white;cursor:pointer}
+    button.secondary{background:#64748b}
+    button.warn{background:#f97316}
+    input[type=text], input[type=number], select{padding:8px;border-radius:8px;border:1px solid #d1d5db}
+    .arrayView{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', monospace;background:#0f1724;color:#e6f1ff;padding:10px;border-radius:8px;overflow:auto}
+    pre.console{height:320px;overflow:auto;background:#0b1220;color:#dbeafe;padding:10px;border-radius:8px}
+    .small{font-size:13px;color:#475569}
+    footer{margin-top:16px;color:#64748b;font-size:13px}
+    .row{display:flex;gap:8px;align-items:center}
+    label{font-size:13px;color:#475569}
+    .ops{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+  </style>
 </head>
 <body>
-  <h1>Array Manipulation Example</h1>
-  <p id="output">Array operations will be displayed here.</p>
-  <button id="btn1">Add Fruit</button>
-  <button id="btn2">Remove Last Fruit</button>
-  <button id="btn3">Display All Fruits</button>
+  <div class="container">
+    <header>
+      <h1>My JavaScript Array Playground</h1>
+    </header>
+    <p class="lead">Welcome! This is a simple page I made to play around with JavaScript arrays. Try the buttons below and see what happens to the array. All the changes show up in the console and on the page. Feel free to experiment!</p>
 
-  <script>
-    // Initialize an array of fruits
-    let fruits = ["Apple", "Banana"];
+    <div class="grid">
+      <div>
+        <section class="card">
+          <h3>What you can try here</h3>
+          <ul>
+            <li>Add, remove, and change items in the array with the buttons.</li>
+            <li>See how methods like <code>push</code>, <code>pop</code>, <code>shift</code>, <code>unshift</code> work.</li>
+            <li>Try out <code>map</code>, <code>filter</code>, <code>slice</code> and more.</li>
+            <li>Search for values with <code>indexOf</code>, <code>includes</code>, <code>find</code>.</li>
+            <li>All results show up in the console and on the page.</li>
+          </ul>
+        </section>
 
-    // Display initial array length and content
-    console.log("Initial fruits array:", fruits);
-    console.log("Initial length:", fruits.length);
+        <section class="card" style="margin-top:12px">
+          <h3>Array state</h3>
+          <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+            <div style="flex:1">
+              <div class="arrayView" id="arrayView">[]</div>
+            </div>
+            <div class="small">Length: <span id="arrLen">0</span></div>
+          </div>
 
-    // Add a new fruit to the end using push()
-    const newLength = fruits.push("Orange");
-    console.log("After adding 'Orange':", fruits);
-    console.log("New length:", newLength);
+          <div style="margin-bottom:10px" class="row">
+            <input id="valueInput" type="text" placeholder="value (string or number)"/>
+            <input id="indexInput" type="number" placeholder="index (optional)" style="width:120px"/>
+            <select id="typeSelect"><option value="auto">auto (try to parse number)</option><option value="string">string</option><option value="number">number</option></select>
+          </div>
 
-    // Remove the last fruit using pop()
-    const removedItem = fruits.pop();
-    console.log("After removing last item:", fruits);
-    console.log("Removed item:", removedItem);
+          <div class="controls">
+            <button id="btnPush">push()</button>
+            <button id="btnPop" class="secondary">pop()</button>
+            <button id="btnUnshift">unshift()</button>
+            <button id="btnShift" class="secondary">shift()</button>
+            <button id="btnSplice" class="warn">splice()</button>
+            <button id="btnSlice" class="secondary">slice()</button>
+            <button id="btnClear" class="secondary">clear (set [])</button>
+          </div>
 
-    // Add multiple fruits using push() with multiple arguments
-    fruits.push("Grape", "Mango");
-    console.log("After adding 'Grape' and 'Mango':", fruits);
+          <div style="margin-top:12px" class="ops">
+            <button id="btnIndexOf">indexOf()</button>
+            <button id="btnIncludes">includes()</button>
+            <button id="btnFind">find()</button>
+            <button id="btnFindIndex">findIndex()</button>
+            <button id="btnMap">map()</button>
+            <button id="btnFilter">filter()</button>
+            <button id="btnReduce">reduce()</button>
+            <button id="btnReverse">reverse()</button>
+          </div>
 
-    // Use forEach to iterate and log each fruit with its index
-    fruits.forEach((fruit, index) => {
-      console.log(`Fruit at index ${index}: ${fruit}`);
-    });
+        </section>
 
-    // Use join() to create a comma-separated string
-    const fruitsString = fruits.join(", ");
-    console.log("Fruits as a string:", fruitsString);
+        <section class="card" style="margin-top:12px">
+          <h3 class="small">Quick tests (just for fun)</h3>
+          <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+            <button id="ex1">Fill with 5 numbers</button>
+            <button id="ex2">Double the numbers</button>
+            <button id="ex3">Show only evens</button>
+            <button id="ex4">Add them up</button>
+            <button id="ex5">Find 42</button>
+          </div>
+        </section>
 
-    // Update the HTML page dynamically
-    document.getElementById("btn1").onclick = function () {
-      const newFruit = prompt("Enter a new fruit:");
-      if (newFruit) {
-        fruits.push(newFruit);
-        console.log("Added:", newFruit);
-        document.getElementById("output").textContent = `Current fruits: ${fruits.join(", ")}`;
-      }
-    };
+      </div>
 
-    document.getElementById("btn2").onclick = function () {
-      if (fruits.length > 0) {
-        const removed = fruits.pop();
-        console.log("Removed:", removed);
-        document.getElementById("output").textContent = `Current fruits: ${fruits.join(", ")}`;
-      } else {
-        document.getElementById("output").textContent = "No fruits to remove.";
-      }
-    };
+      <aside>
+        <section class="card">
+          <h3>Console output</h3>
+          <pre class="console" id="console">// Console output will appear here. Try the buttons and see what shows up!</pre>
+          <div style="margin-top:8px;display:flex;gap:8px">
+            <button id="btnClearConsole" class="secondary">Clear console</button>
+            <button id="btnDownloadLog">Download log</button>
+          </div>
+        </section>
 
-    document.getElementById("btn3").onclick = function () {
-      if (fruits.length > 0) {
-        document.getElementById("output").textContent = `Current fruits: ${fruits.join(", ")}`;
-      } else {
-        document.getElementById("output").textContent = "No fruits in the list.";
-      }
-    };
-  </script>
+        <section class="card" style="margin-top:12px">
+          <h3 class="small">Notes</h3>
+          <p class="small">I set up this page so that <code>console.log</code> messages show up here as well as in the browser console. You can use the controls to mess around and see what happens. Open devtools if you want to see the real console too.</p>
+        </section>
+      </aside>
+    </div>
+
+  <footer>Made by me for practice — feel free to play with the code or add your own ideas!</footer>
+  </div>
+
+<script>
+// ----- utility: mirror console to the page -----
+(function(){
+  const originalLog = console.log.bind(console);
+  const originalError = console.error.bind(console);
+  const consoleEl = document.getElementById('console');
+  const logs = [];
+
+  function append(type, args){
+    const text = args.map(a => {
+      try { return typeof a === 'object' ? JSON.stringify(a) : String(a); } catch (e){ return String(a); }
+    }).join(' ');
+    const line = '['+ new Date().toLocaleTimeString() + '] ' + type.toUpperCase() + ': ' + text;
+    logs.push(line);
+    consoleEl.textContent = logs.join('\n');
+    consoleEl.scrollTop = consoleEl.scrollHeight;
+  }
+  console.log = function(...args){ originalLog(...args); append('log', args); };
+  console.error = function(...args){ originalError(...args); append('error', args); };
+  // expose helpers for download / clear
+  window._demoConsoleLogs = logs;
+})();
+
+// ----- Array demo logic -----
+const demo = (function(){
+  let arr = [];
+
+  const arrayView = document.getElementById('arrayView');
+  const arrLen = document.getElementById('arrLen');
+
+  function render(){
+    // pretty print with types
+    arrayView.textContent = '[' + arr.map(v => typeof v === 'string' ? '"'+v+'"' : String(v)).join(', ') + ']';
+    arrLen.textContent = String(arr.length);
+  }
+
+  function readInput(){
+    const val = document.getElementById('valueInput').value;
+    const type = document.getElementById('typeSelect').value;
+    if(type === 'string') return val;
+    if(type === 'number') return Number(val);
+    // auto: try to parse as number, if looks numeric use number
+    if(val.trim() === '') return val;
+    return isFinite(val) ? Number(val) : val;
+  }
+
+  function readIndex(){
+    const v = document.getElementById('indexInput').value;
+    return v === '' ? undefined : Number(v);
+  }
+
+  // operations
+  function push(){ const val = readInput(); const res = arr.push(val); console.log('push(', val, ') -> new length', res); render(); }
+  function pop(){ const val = arr.pop(); console.log('pop() ->', val); render(); }
+  function unshift(){ const val = readInput(); const res = arr.unshift(val); console.log('unshift(', val, ') -> new length', res); render(); }
+  function shift(){ const val = arr.shift(); console.log('shift() ->', val); render(); }
+  function spliceOp(){ const idx = readIndex(); const val = readInput(); if(idx === undefined){ console.error('splice requires an index in the index box'); return } const removed = arr.splice(idx, 0, val); console.log('splice insert at', idx, 'value', val, 'removed:', removed); render(); }
+  function sliceOp(){ const idx = readIndex(); const other = prompt('Enter end index for slice (or leave blank):'); const res = idx === undefined ? arr.slice() : (other === '' ? arr.slice(idx) : arr.slice(idx, Number(other)) ); console.log('slice ->', res); alert('Result: ' + JSON.stringify(res)); }
+  function clear(){ arr = []; console.log('array cleared'); render(); }
+
+  function indexOfOp(){ const val = readInput(); const res = arr.indexOf(val); console.log('indexOf(', val, ') ->', res); alert('indexOf result: ' + res); }
+  function includesOp(){ const val = readInput(); const res = arr.includes(val); console.log('includes(', val, ') ->', res); alert('includes result: ' + res); }
+  function findOp(){ const term = readInput(); const res = arr.find(x => String(x) === String(term)); console.log('find matching string(', term, ') ->', res); alert('find result: ' + res); }
+  function findIndexOp(){ const term = readInput(); const res = arr.findIndex(x => String(x) === String(term)); console.log('findIndex matching string(', term, ') ->', res); alert('findIndex result: ' + res); }
+  function mapOp(){ try{ const fnBody = prompt('Enter map expression using x, e.g. x*2 or x+"!"'); if(fnBody === null) return; const mapped = arr.map(new Function('x', 'return ' + fnBody)); console.log('map ->', mapped); arr = mapped; render(); }catch(e){ console.error('map error', e); alert('map error: ' + e.message); }}
+  function filterOp(){ try{ const fnBody = prompt('Enter filter expression using x, e.g. x%2===0'); if(fnBody === null) return; const filtered = arr.filter(new Function('x', 'return ' + fnBody)); console.log('filter ->', filtered); arr = filtered; render(); }catch(e){ console.error('filter error', e); alert('filter error: ' + e.message); }}
+  function reduceOp(){ try{ const fnBody = prompt('Enter reduce expression using acc and x, e.g. acc+x (initial will be 0)'); if(fnBody === null) return; const res = arr.reduce(new Function('acc','x','return ' + fnBody), 0); console.log('reduce result ->', res); alert('reduce result: ' + res); }catch(e){ console.error('reduce error', e); alert('reduce error: ' + e.message); }}
+  function reverseOp(){ arr.reverse(); console.log('reverse ->', arr); render(); }
+
+  // exercises
+  function ex1(){ arr = [1,2,3,4,5]; console.log('exercise: filled with [1,2,3,4,5]'); render(); }
+  function ex2(){ arr = arr.map(x => typeof x === 'number' ? x*2 : x); console.log('exercise: doubled numeric values ->', arr); render(); }
+  function ex3(){ arr = arr.filter(x => typeof x === 'number' ? x%2===0 : false); console.log('exercise: kept evens ->', arr); render(); }
+  function ex4(){ const sum = arr.reduce((a,b)=> typeof b==='number'? a+b : a, 0); console.log('exercise: sum of numeric items ->', sum); alert('Sum: ' + sum); }
+  function ex5(){ const found = arr.find(x => x === 42); console.log('exercise: find 42 ->', found); alert('Found: ' + found); }
+
+  // wire to DOM
+  document.getElementById('btnPush').addEventListener('click', push);
+  document.getElementById('btnPop').addEventListener('click', pop);
+  document.getElementById('btnUnshift').addEventListener('click', unshift);
+  document.getElementById('btnShift').addEventListener('click', shift);
+  document.getElementById('btnSplice').addEventListener('click', spliceOp);
+  document.getElementById('btnSlice').addEventListener('click', sliceOp);
+  document.getElementById('btnClear').addEventListener('click', clear);
+  document.getElementById('btnIndexOf').addEventListener('click', indexOfOp);
+  document.getElementById('btnIncludes').addEventListener('click', includesOp);
+  document.getElementById('btnFind').addEventListener('click', findOp);
+  document.getElementById('btnFindIndex').addEventListener('click', findIndexOp);
+  document.getElementById('btnMap').addEventListener('click', mapOp);
+  document.getElementById('btnFilter').addEventListener('click', filterOp);
+  document.getElementById('btnReduce').addEventListener('click', reduceOp);
+  document.getElementById('btnReverse').addEventListener('click', reverseOp);
+
+  document.getElementById('ex1').addEventListener('click', ex1);
+  document.getElementById('ex2').addEventListener('click', ex2);
+  document.getElementById('ex3').addEventListener('click', ex3);
+  document.getElementById('ex4').addEventListener('click', ex4);
+  document.getElementById('ex5').addEventListener('click', ex5);
+
+  // console helpers
+  document.getElementById('btnClearConsole').addEventListener('click', () => { const el = document.getElementById('console'); el.textContent = '// cleared'; window._demoConsoleLogs.length = 0; });
+  document.getElementById('btnDownloadLog').addEventListener('click', () => {
+    const blob = new Blob([window._demoConsoleLogs.join('\n')], {type:'text/plain'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = 'array-demo-log.txt'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+  });
+
+  // initial render
+  render();
+
+  return {
+    getArray(){ return arr.slice(); },
+    setArray(a){ arr = Array.isArray(a)? a.slice() : []; render(); }
+  };
+})();
+
+// Add a couple of sample console logs for learners
+console.log('Welcome to the Array Practice Demo. Try pushing values, then pop or use map/filter to practice.');
+console.log('Examples: push("apple") then push(42) then pop()');
+
+</script>
 </body>
-</html>   
+</html>
